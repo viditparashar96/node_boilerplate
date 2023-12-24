@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const hello_controller_1 = require("../controllers/hello-controller");
+const express = require('express');
+const router = express.Router();
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Get Hello World
+ *     description: Returns a "Hello World!" message.
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *         examples:
+ *           application/json:
+ *             message: Hello World!
+ */
+router.get('/', hello_controller_1.hello_world);
+module.exports = router;
