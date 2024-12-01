@@ -23,22 +23,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importStar(require("mongoose"));
-const UserSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    address: [
-        {
-            street: String,
-            city: String,
-            state: String,
-            zip: String,
-            country: String,
-        },
-    ],
-    role: { type: String, enum: ["customer"], default: "customer" },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
-});
-exports.default = mongoose_1.default.model("User", UserSchema);
+exports.validateSchema = void 0;
+const z = __importStar(require("zod"));
+const validateSchema = (schema) => (req, res, next) => {
+    try {
+        schema.parse(req.body);
+        next();
+    }
+    catch (err) {
+        if (err instanceof z.ZodError) {
+            return res
+                .status(400)
+                .json({ errors: err.errors, message: "Invalid data" });
+        }
+        next(err);
+    }
+};
+exports.validateSchema = validateSchema;

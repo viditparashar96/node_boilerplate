@@ -12,18 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connect_db = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const env_config_1 = require("./env-config");
-const connect_db = () => __awaiter(void 0, void 0, void 0, function* () {
-    const db_options = {};
-    try {
-        const conn = yield mongoose_1.default.connect(env_config_1.env_conf.db_uri, db_options);
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
-    }
-    catch (error) {
-        console.log(`Error: ${error}`);
-        process.exit();
-    }
+exports.createVendor = exports.findVendorByEmail = void 0;
+const vendor_model_1 = __importDefault(require("../models/vendor-model"));
+const findVendorByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield vendor_model_1.default.findOne({ email });
 });
-exports.connect_db = connect_db;
+exports.findVendorByEmail = findVendorByEmail;
+const createVendor = (vendorData) => __awaiter(void 0, void 0, void 0, function* () {
+    const vendor = new vendor_model_1.default(vendorData);
+    return yield vendor.save();
+});
+exports.createVendor = createVendor;
