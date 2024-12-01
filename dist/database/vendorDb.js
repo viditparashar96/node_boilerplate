@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createVendor = exports.findVendorByEmail = void 0;
+exports.findVendorById = exports.createVendor = exports.findVendorByEmail = void 0;
 const vendor_model_1 = __importDefault(require("../models/vendor-model"));
 const findVendorByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
     return yield vendor_model_1.default.findOne({ email });
@@ -23,3 +23,7 @@ const createVendor = (vendorData) => __awaiter(void 0, void 0, void 0, function*
     return yield vendor.save();
 });
 exports.createVendor = createVendor;
+const findVendorById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield vendor_model_1.default.findById(id);
+});
+exports.findVendorById = findVendorById;

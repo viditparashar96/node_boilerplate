@@ -45,12 +45,14 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield database_1.UserDb.findUserByEmail(email);
         if (!user)
             return res.status(404).json({ message: "User not found" });
-        //@ts-ignore
         const isMatch = yield bcryptjs_1.default.compare(password, user.password);
         if (!isMatch)
             return res.status(401).json({ message: "Invalid credentials" });
         const token = (0, generateToken_1.generateToken)(user._id, "user");
-        res.status(200).json({ token, user });
+        res
+            .cookie("token", token, { httpOnly: true })
+            .status(200)
+            .json({ token, user });
     }
     catch (error) {
         res.status(500).json({ message: "Server error", error });

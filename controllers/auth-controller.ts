@@ -32,13 +32,15 @@ export const loginUser = async (req: Request, res: Response) => {
   try {
     const user = await UserDb.findUserByEmail(email);
     if (!user) return res.status(404).json({ message: "User not found" });
-    //@ts-ignore
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(401).json({ message: "Invalid credentials" });
 
     const token = generateToken(user._id, "user");
-    res.status(200).json({ token, user });
+    res
+      .cookie("token", token, { httpOnly: true })
+      .status(200)
+      .json({ token, user });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

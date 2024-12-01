@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.findUserByEmail = void 0;
+exports.findUserById = exports.createUser = exports.findUserByEmail = void 0;
 const user_model_1 = __importDefault(require("../models/user-model"));
 const findUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
     return yield user_model_1.default.findOne({ email });
@@ -23,3 +23,7 @@ const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () 
     return yield user.save();
 });
 exports.createUser = createUser;
+const findUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield user_model_1.default.findById(id);
+});
+exports.findUserById = findUserById;

@@ -12,3 +12,7 @@ export const createVendor = async (
   const vendor = new Vendor(vendorData);
   return await vendor.save();
 };
+
+export const findVendorById = async (id: string): Promise<IVendor | null> => {
+  return await Vendor.findById(id);
+};
