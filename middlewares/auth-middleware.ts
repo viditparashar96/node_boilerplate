@@ -20,7 +20,6 @@ export const authenticateUser = async (
   }
 
   try {
-    // Verify the token
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET as string
@@ -28,7 +27,6 @@ export const authenticateUser = async (
 
     console.log("decoded data===>", decoded);
 
-    // Determine user role and fetch data
     if (decoded.role === "user") {
       const user = await UserDb.findUserById(decoded.id);
       if (!user) return res.status(404).json({ message: "User not found" });
@@ -41,7 +39,7 @@ export const authenticateUser = async (
       return res.status(403).json({ message: "Invalid role" });
     }
 
-    next(); // Proceed to the next middleware or route handler
+    next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired token", error });
   }
